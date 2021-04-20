@@ -23,13 +23,10 @@ ratings_mat = np.ndarray(
     dtype=np.uint8)
 ratings_mat[data.movie_id.values-1, data.user_id.values-1] = data.rating.values
 
-print("ratings matrix: ", ratings_mat)
-
 # Normalizing the matrix(subtract mean off)
 normalised_mat = ratings_mat - np.asarray([(np.mean(ratings_mat, 1))]).T
 # Computing the Singular Value Decomposition (SVD)
 A = normalised_mat.T / np.sqrt(ratings_mat.shape[0] - 1)
-# print("A into SVD: ", normalised_mat)
 U, S, V = np.linalg.svd(A)
 # print("U from SVD: ", U)
 # print("S from SVD: ", S)
@@ -55,7 +52,7 @@ def print_similar_movies(movie_data, movie_id, top_indexes):
             print(movie_data[movie_data.movie_id == id].genre.values , '\n')
 
 # k-principal components to represent movies, movie_id to find recommendations, top_n print n results        
-k = 50 #PCA Analysis
+k = 30 # PCA Analysis
 movie_id = 2 # (getting an id from movies.dat)
 top_n = 15
 sliced = V.T[:, :k] # representative data
